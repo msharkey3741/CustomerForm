@@ -8,7 +8,6 @@ class Home extends React.Component {
   state = {
     modal: false
   };
-
   toggle = () => {
     this.setState(prevState => ({
       modal: !prevState.modal
