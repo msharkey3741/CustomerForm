@@ -1,3 +1,8 @@
+**_getting started_**
+
+Matt Sharkeys code challenge for Q Cells
+
+<!--
 ## Make React Components
 
 > You must execute a `yarn install` command before you can execute a `yarn start` command
@@ -42,4 +47,4 @@ This is a multi-step process
 
 ```javascript
 var payload = { email: "user@google.com", password: "password" };
-```
+``` -->
