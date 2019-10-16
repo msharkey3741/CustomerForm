@@ -17,6 +17,7 @@ const customerSchema = Yup.object().shape({
 class CustomerForm extends React.Component {
   render() {
     return (
+      /* Form for adding and updating customer information */
       <div>
         <h1>Add Customers Info Here</h1>
         <Formik

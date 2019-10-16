@@ -2,6 +2,16 @@
 
 Matt Sharkeys code challenge for Q Cells
 
+Formik on a model
+
+Map through all customers in DB
+
+Delete button removes DB item
+
+Deactivate to set status to 0 which "deactivates" account
+
+Update to update customers information
+
 <!--
 ## Make React Components
 
