@@ -17,7 +17,7 @@ class Home extends React.Component {
     console.log("delete");
   };
   update = () => {
-    console.log("update");
+    this.toggle();
   };
   deactivate = () => {
     console.log("deactivate");
