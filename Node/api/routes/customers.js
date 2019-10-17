@@ -6,11 +6,13 @@ router.get('/', (req, res, next)=>{
         message: 'get customers'
     })
 })
+/* get customer */
 router.get('/:id', (req, res, next)=>{
     const id = req.params.id
     if(id === '1'){
     res.status(200).json({
-        message: 'get customer by id'
+        message: 'get customer by id',
+        id:id
     })
     } else{
         res.status(200).json({
@@ -20,18 +22,26 @@ router.get('/:id', (req, res, next)=>{
 })
 /* add customer */
 router.post('/', (req, res, next)=>{
-    res.status(200).json({
-        message: 'add customers'
+    const customer = {
+        firstname: req.body.firstName,
+        lastname: req.body.lastName,
+        email: req.body.email
+    }
+    res.status(201).json({
+        message: 'add customers',
+        createdCustomer: customer
     })
 })
-router.delete('/', (req, res, next)=>{
+/* delete customer */
+router.delete('/:id', (req, res, next)=>{
     res.status(200).json({
-        message: 'delete customers'
+        message: 'delete customer'
     })
 })
-router.put('/', (req, res, next)=>{
+/* update customer */
+router.put('/:id', (req, res, next)=>{
     res.status(200).json({
-        message: 'update customers'
+        message: 'update customer'
     })
 })
 module.exports = router;
