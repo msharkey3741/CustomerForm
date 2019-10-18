@@ -5,9 +5,16 @@ const Customer = require("../models/customers");
 const mongoose = require("mongoose");
 /* get customer */
 router.get("/", (req, res, next) => {
-  res.status(200).json({
-    message: "get customers"
-  });
+  Customer.find()
+    .exec()
+    .then(docs => {
+      res.status(200).json(docs);
+    })
+    .catch(err => {
+      res.state(500).json({
+        error: err
+      });
+    });
 });
 /* get customer */
 router.get("/:id", (req, res, next) => {
@@ -15,9 +22,19 @@ router.get("/:id", (req, res, next) => {
   Customer.findById(id)
     .exec()
     .then(doc => {
-      console.log(doc);
+      if (doc) {
+        res.status(200).json(doc);
+      } else {
+        res.status(404).json({
+          message: "ID doesnt exist"
+        });
+      }
     })
-    .catch(err => console.log(err));
+    .catch(err =>
+      res.status(500).json({
+        err: err
+      })
+    );
 });
 /* add customer */
 router.post("/", (req, res, next) => {
@@ -29,23 +46,51 @@ router.post("/", (req, res, next) => {
   });
   customer
     .save()
-    .then(result => console.log(result))
-    .catch(err => console.log(err));
-  res.status(201).json({
-    message: "add customers",
-    createdCustomer: customer
-  });
+    .then(result => {
+      res.status(201).json({
+        createdCustomer: result
+      });
+    })
+    .catch(err =>
+      res.status(500).json({
+        error: err
+      })
+    );
 });
 /* delete customer */
 router.delete("/:id", (req, res, next) => {
-  res.status(200).json({
-    message: "delete customer"
-  });
+  const id = req.params.id;
+  Customer.remove({ _id: id })
+    .exec()
+    .then(result => {
+      res.status(200).json(result);
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: err
+      });
+    });
 });
 /* update customer */
-router.put("/:id", (req, res, next) => {
-  res.status(200).json({
-    message: "update customer"
-  });
-});
+// router.put("/:id", (req, res, next) => {
+//   const id = req.params.id;
+//   const update = {};
+//   /* Update just info passed */
+//   for (const info of req.body) {
+//     update[info.propName] = info.value;
+//   }
+//   Customer.update(
+//     { _id: id },
+//     {
+//       $set: update
+//     }
+//   )
+//     .exec()
+//     .then(result => {
+//       res.status(200).json(result);
+//     })
+//     .catch(err => {
+//       res.status(500).json(err);
+//     });
+// });
 module.exports = router;
