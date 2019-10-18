@@ -6,9 +6,24 @@ const mongoose = require("mongoose");
 /* get customer */
 router.get("/", (req, res, next) => {
   Customer.find()
+    .select("firstName lastName _id")
     .exec()
     .then(docs => {
-      res.status(200).json(docs);
+      const response = {
+        count: docs.length,
+        customers: docs.map(doc => {
+          return {
+            firstName: doc.firstName,
+            lastName: doc.lastName,
+            email: doc.email,
+            request: {
+              type: "GET",
+              url: `http://localhost:3000/customers/${doc._id}`
+            }
+          };
+        })
+      };
+      res.status(200).json(response);
     })
     .catch(err => {
       res.state(500).json({
@@ -20,6 +35,7 @@ router.get("/", (req, res, next) => {
 router.get("/:id", (req, res, next) => {
   const id = req.params.id;
   Customer.findById(id)
+    .select("firstName lastName _id")
     .exec()
     .then(doc => {
       if (doc) {
@@ -48,7 +64,15 @@ router.post("/", (req, res, next) => {
     .save()
     .then(result => {
       res.status(201).json({
-        createdCustomer: result
+        createdCustomer: {
+          firstName: result.firstName,
+          lastName: result.lastName,
+          email: result.email,
+          request: {
+            type: "GET",
+            url: `http://localhost:3000/customers/${result._id}`
+          }
+        }
       });
     })
     .catch(err =>
