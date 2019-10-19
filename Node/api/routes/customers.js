@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-// const service = require("../services/customerService");
 const Customer = require("../models/customers");
 const mongoose = require("mongoose");
+
 /* get customer */
 router.get("/", (req, res, next) => {
   Customer.find()
-    .select("firstName lastName _id")
+    //.select("firstName lastName email _id")
     .exec()
     .then(docs => {
       const response = {
@@ -16,6 +16,7 @@ router.get("/", (req, res, next) => {
             firstName: doc.firstName,
             lastName: doc.lastName,
             email: doc.email,
+            id: doc._id,
             request: {
               type: "GET",
               url: `http://localhost:3000/customers/${doc._id}`
@@ -35,7 +36,7 @@ router.get("/", (req, res, next) => {
 router.get("/:id", (req, res, next) => {
   const id = req.params.id;
   Customer.findById(id)
-    .select("firstName lastName _id")
+    .select("firstName lastName email _id")
     .exec()
     .then(doc => {
       if (doc) {
@@ -95,26 +96,5 @@ router.delete("/:id", (req, res, next) => {
       });
     });
 });
-/* update customer */
-// router.put("/:id", (req, res, next) => {
-//   const id = req.params.id;
-//   const update = {};
-//   /* Update just info passed */
-//   for (const info of req.body) {
-//     update[info.propName] = info.value;
-//   }
-//   Customer.update(
-//     { _id: id },
-//     {
-//       $set: update
-//     }
-//   )
-//     .exec()
-//     .then(result => {
-//       res.status(200).json(result);
-//     })
-//     .catch(err => {
-//       res.status(500).json(err);
-//     });
-// });
+
 module.exports = router;

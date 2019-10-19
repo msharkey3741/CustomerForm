@@ -4,8 +4,9 @@
   "description": "node rest",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "client": "cd client && yarn start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
   "keywords": [
     "node",
@@ -15,12 +16,15 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
-    "mssql": "^5.1.0"
+    "mssql": "^5.1.0",
+    "unirest": "^0.6.0"
   },
   "devDependencies": {
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "concurrently": "^4.0.1"
   }
 }

@@ -2,12 +2,17 @@ import React from "react";
 import { Formik, FastField } from "formik";
 
 class CustomerForm extends React.Component {
-  state = {
-    formData: { email: "", firstName: "", lastName: "" }
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      formData: { email: "", firstName: "", lastName: "" }
+    };
+  }
+
   submit = values => {
-    console.log(values);
+    this.props.addCustomer(values);
   };
+
   render() {
     return (
       /* Form for adding and updating customer information */
